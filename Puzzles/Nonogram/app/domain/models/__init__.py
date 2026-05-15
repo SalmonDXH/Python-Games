@@ -1,1 +1,1 @@
-from .Block import (BlockModel, BlockPresentationModel)
+from .Block import (BlockModel, BlockPresentationModel, TableModel)
