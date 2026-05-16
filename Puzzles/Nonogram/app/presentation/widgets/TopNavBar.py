@@ -27,7 +27,10 @@ class GenerateDetailWidget(ctk.CTkFrame):
         
     def generate_table(self):
         percentage = self.box_percentage.get()
-        percentage = float(percentage) if percentage != "" and percentage.isdigit() else 80
+        try:
+            percentage = float(percentage)
+        except ValueError:
+            percentage = 50
         
         
         width = self.width_input.get()
@@ -40,33 +43,6 @@ class GenerateDetailWidget(ctk.CTkFrame):
         
         self.master.generate_table(width,height,percentage,seed_id)
 
-class SelectWidget(ctk.CTkFrame):
-    current_mode = None
-    
-    def __init__(self, master):
-        super().__init__(master=master)
-        self.pack(side="left",fill="x", padx=5)
-        
-        self.black_button = ctk.CTkButton(master=self, text="Black",width=60, command=self.black_select)
-        self.black_button.pack(side="left",padx=4,pady=2)
-        self.x_button = ctk.CTkButton(master=self, text="X", width=60, command=self.x_select)
-        self.x_button.pack(side="right",padx=4,pady=2)
-    
-    def black_select(self):
-        self.current_mode = True
-        self.select_change()
-    
-    def x_select(self):
-        self.current_mode = False
-        self.select_change()
-    
-    def select_change(self):
-        self.black_button.configure(fg_color="#1F6AA5")
-        self.x_button.configure(fg_color="#1F6AA5")  
-        self.black_button.configure(fg_color="green") if self.current_mode else self.x_button.configure(fg_color="red")
-    
-    def get_mode(self)->bool:
-        return self.current_mode
         
 
 class GameStatisticWidget(ctk.CTkFrame):
@@ -108,10 +84,11 @@ class TopNavBar(ctk.CTkFrame):
         ""
        
         self.game_statistic_widget = GameStatisticWidget(master=self)
-        self.select_widget = SelectWidget(master=self)
         self.generate_detail_widget = GenerateDetailWidget(master=self)
         
     def generate_table(self, width:int, height:int, percentage:float,seed_id:int=None):
         self.master.generate_table(width,height,percentage,seed_id)
+        self.game_statistic_widget.change_time(0)
+    
         
         

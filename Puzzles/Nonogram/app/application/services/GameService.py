@@ -11,7 +11,7 @@ class GameService:
         return self._gr.generate_table(width,height,percentage,seed_id)
     
     def choose_block(self, block_id:int, type:bool):
-        pass
+        return self._gr.choose_block(block_id=block_id, type=type)
     
     def get_table(self):
         pass

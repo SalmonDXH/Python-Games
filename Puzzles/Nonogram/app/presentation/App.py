@@ -25,5 +25,10 @@ class NonogramApp(ctk.CTk):
         self.mainloop()
     
     def generate_table(self, width:int, height:int, percentage:float,seed_id:int=None):
-        result = services.game_service.generate_table(width,height,percentage,seed_id)
-        print(result)
+        self.content_widget.generate_table(width,height,percentage,seed_id)
+    
+    def choose_block(self, block_id:int, type:bool=None):
+        if type is not None:
+            result = services.game_service.choose_block(block_id=block_id, type=type)
+            
+            return result
